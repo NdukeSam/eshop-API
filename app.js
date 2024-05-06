@@ -30,12 +30,4 @@ mongoose.connect(process.env.COLLECTION_STRING)
     // throw new Error('Database connection unsuccessful')
   });
 
-// const func = () => {
-//   return "hello";
-// };
 
-// func()
-
-// function String(letters) {
-//   this.letters = letters;
-// }
