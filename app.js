@@ -4,17 +4,20 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 
+const productsRouter = require("./routers/products")
+const api = process.env.API_URL;
 require("dotenv/config");
 
 //middleware
 app.use(bodyParser.json());
 app.use(morgan("tiny"));
 
-const api = process.env.API_URL;
+//Routers
+app.use(`${api}/products`, productsRouter)
 
-mongoose
-  .connect(process.env.COLLECTION_STRING)
-  .then(() => {
+
+mongoose.connect(process.env.COLLECTION_STRING)
+.then(() => {
     app.listen(3000, () => {
       console.log(api);
       console.log("Server running http://localhost:3000");
@@ -26,21 +29,6 @@ mongoose
     console.log(err);
     // throw new Error('Database connection unsuccessful')
   });
-
-app.get(`${api}/products`, (req, res) => {
-  const product = {
-    id: 1,
-    name: "high-top sneakers",
-    image: "some_url",
-  };
-  res.send(product);
-});
-
-app.post(`${api}/products`, (req, res) => {
-  const newProduct = req.body;
-  console.log(newProduct);
-  res.send(newProduct);
-});
 
 // const func = () => {
 //   return "hello";
